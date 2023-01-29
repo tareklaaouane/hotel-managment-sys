@@ -1,0 +1,35 @@
+﻿@model TSH_HOTELSS.Models.images
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>images</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.imagelink)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.imagelink)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hotels.nomhotel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hotels.nomhotel)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.idimg }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

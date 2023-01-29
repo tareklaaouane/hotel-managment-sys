@@ -1,0 +1,40 @@
+﻿@model IEnumerable<TSH_HOTELSS.Models.images>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.imagelink)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.hotels.nomhotel)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.imagelink)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.hotels.nomhotel)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.idimg }) |
+            @Html.ActionLink("Details", "Details", new { id=item.idimg }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.idimg })
+        </td>
+    </tr>
+}
+
+</table>

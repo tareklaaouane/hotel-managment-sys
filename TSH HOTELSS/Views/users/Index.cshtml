@@ -1,0 +1,52 @@
+﻿@model IEnumerable<TSH_HOTELSS.Models.users>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.username)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pass)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.uroles.rolename)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.username)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pass)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.uroles.rolename)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.iduser }) |
+            @Html.ActionLink("Details", "Details", new { id=item.iduser }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.iduser })
+        </td>
+    </tr>
+}
+
+</table>

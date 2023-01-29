@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="hmsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="hotels">
+          <Key>
+            <PropertyRef Name="idhotel" />
+          </Key>
+          <Property Name="idhotel" Type="int" Nullable="false" />
+          <Property Name="nomhotel" Type="varchar" MaxLength="30" />
+          <Property Name="ville" Type="varchar" MaxLength="40" />
+          <Property Name="nbetoile" Type="int" />
+          <Property Name="rating" Type="int" />
+          <Property Name="prix" Type="int" />
+          <Property Name="descr" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="idimg" />
+          </Key>
+          <Property Name="idimg" Type="int" Nullable="false" />
+          <Property Name="imagelink" Type="varchar" MaxLength="1000" />
+          <Property Name="idhotel" Type="int" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="idrev" />
+          </Key>
+          <Property Name="idrev" Type="int" Nullable="false" />
+          <Property Name="titlerev" Type="varchar" MaxLength="255" />
+          <Property Name="descr" Type="varchar" MaxLength="255" />
+          <Property Name="idhotel" Type="int" />
+          <Property Name="iduser" Type="int" />
+          <Property Name="score" Type="int" />
+        </EntityType>
+        <EntityType Name="uroles">
+          <Key>
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="roleid" Type="int" Nullable="false" />
+          <Property Name="rolename" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="int" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="20" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="pass" Type="varchar" MaxLength="255" />
+          <Property Name="roleid" Type="int" />
+        </EntityType>
+        <Association Name="fk_hot">
+          <End Role="hotels" Type="Self.hotels" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotels">
+              <PropertyRef Name="idhotel" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="idhotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_hotel">
+          <End Role="hotels" Type="Self.hotels" Multiplicity="0..1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotels">
+              <PropertyRef Name="idhotel" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="idhotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_role">
+          <End Role="uroles" Type="Self.uroles" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uroles">
+              <PropertyRef Name="roleid" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="roleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hmsModelStoreContainer">
+          <EntitySet Name="hotels" EntityType="Self.hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="uroles" EntityType="Self.uroles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_hot" Association="Self.fk_hot">
+            <End Role="hotels" EntitySet="hotels" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="fk_hotel" Association="Self.fk_hotel">
+            <End Role="hotels" EntitySet="hotels" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="fk_role" Association="Self.fk_role">
+            <End Role="uroles" EntitySet="uroles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user" Association="Self.fk_user">
+            <End Role="users" EntitySet="users" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="hmsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="hotels">
+          <Key>
+            <PropertyRef Name="idhotel" />
+          </Key>
+          <Property Name="idhotel" Type="Int32" Nullable="false" />
+          <Property Name="nomhotel" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ville" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="nbetoile" Type="Int32" />
+          <Property Name="rating" Type="Int32" />
+          <Property Name="prix" Type="Int32" />
+          <Property Name="descr" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="images" Relationship="Self.fk_hot" FromRole="hotels" ToRole="images" />
+          <NavigationProperty Name="reviews" Relationship="Self.fk_hotel" FromRole="hotels" ToRole="reviews" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="idimg" />
+          </Key>
+          <Property Name="idimg" Type="Int32" Nullable="false" />
+          <Property Name="imagelink" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="idhotel" Type="Int32" />
+          <NavigationProperty Name="hotels" Relationship="Self.fk_hot" FromRole="images" ToRole="hotels" />
+        </EntityType>
+        <EntityType Name="reviews">
+          <Key>
+            <PropertyRef Name="idrev" />
+          </Key>
+          <Property Name="idrev" Type="Int32" Nullable="false" />
+          <Property Name="titlerev" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="descr" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="idhotel" Type="Int32" />
+          <Property Name="iduser" Type="Int32" />
+          <Property Name="score" Type="Int32" />
+          <NavigationProperty Name="hotels" Relationship="Self.fk_hotel" FromRole="reviews" ToRole="hotels" />
+          <NavigationProperty Name="users" Relationship="Self.fk_user" FromRole="reviews" ToRole="users" />
+        </EntityType>
+        <EntityType Name="uroles">
+          <Key>
+            <PropertyRef Name="roleid" />
+          </Key>
+          <Property Name="roleid" Type="Int32" Nullable="false" />
+          <Property Name="rolename" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="users" Relationship="Self.fk_role" FromRole="uroles" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="iduser" />
+          </Key>
+          <Property Name="iduser" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="roleid" Type="Int32" />
+          <NavigationProperty Name="reviews" Relationship="Self.fk_user" FromRole="users" ToRole="reviews" />
+          <NavigationProperty Name="uroles" Relationship="Self.fk_role" FromRole="users" ToRole="uroles" />
+        </EntityType>
+        <Association Name="fk_hot">
+          <End Role="hotels" Type="Self.hotels" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotels">
+              <PropertyRef Name="idhotel" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="idhotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_hotel">
+          <End Role="hotels" Type="Self.hotels" Multiplicity="0..1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="hotels">
+              <PropertyRef Name="idhotel" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="idhotel" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user">
+          <End Role="users" Type="Self.users" Multiplicity="0..1" />
+          <End Role="reviews" Type="Self.reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="iduser" />
+            </Principal>
+            <Dependent Role="reviews">
+              <PropertyRef Name="iduser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_role">
+          <End Role="uroles" Type="Self.uroles" Multiplicity="0..1" />
+          <End Role="users" Type="Self.users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="uroles">
+              <PropertyRef Name="roleid" />
+            </Principal>
+            <Dependent Role="users">
+              <PropertyRef Name="roleid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="hmsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="hotels" EntityType="Self.hotels" />
+          <EntitySet Name="images" EntityType="Self.images" />
+          <EntitySet Name="reviews" EntityType="Self.reviews" />
+          <EntitySet Name="uroles" EntityType="Self.uroles" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="fk_hot" Association="Self.fk_hot">
+            <End Role="hotels" EntitySet="hotels" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+          <AssociationSet Name="fk_hotel" Association="Self.fk_hotel">
+            <End Role="hotels" EntitySet="hotels" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user" Association="Self.fk_user">
+            <End Role="users" EntitySet="users" />
+            <End Role="reviews" EntitySet="reviews" />
+          </AssociationSet>
+          <AssociationSet Name="fk_role" Association="Self.fk_role">
+            <End Role="uroles" EntitySet="uroles" />
+            <End Role="users" EntitySet="users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="hmsModelStoreContainer" CdmEntityContainer="hmsEntities">
+          <EntitySetMapping Name="hotels">
+            <EntityTypeMapping TypeName="hmsModel.hotels">
+              <MappingFragment StoreEntitySet="hotels">
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="nomhotel" ColumnName="nomhotel" />
+                <ScalarProperty Name="ville" ColumnName="ville" />
+                <ScalarProperty Name="nbetoile" ColumnName="nbetoile" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="prix" ColumnName="prix" />
+                <ScalarProperty Name="descr" ColumnName="descr" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="images">
+            <EntityTypeMapping TypeName="hmsModel.images">
+              <MappingFragment StoreEntitySet="images">
+                <ScalarProperty Name="idimg" ColumnName="idimg" />
+                <ScalarProperty Name="imagelink" ColumnName="imagelink" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="reviews">
+            <EntityTypeMapping TypeName="hmsModel.reviews">
+              <MappingFragment StoreEntitySet="reviews">
+                <ScalarProperty Name="idrev" ColumnName="idrev" />
+                <ScalarProperty Name="titlerev" ColumnName="titlerev" />
+                <ScalarProperty Name="descr" ColumnName="descr" />
+                <ScalarProperty Name="idhotel" ColumnName="idhotel" />
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="score" ColumnName="score" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="uroles">
+            <EntityTypeMapping TypeName="hmsModel.uroles">
+              <MappingFragment StoreEntitySet="uroles">
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+                <ScalarProperty Name="rolename" ColumnName="rolename" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="hmsModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="iduser" ColumnName="iduser" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="roleid" ColumnName="roleid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
